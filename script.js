@@ -49,3 +49,20 @@ copyBtn.addEventListener("click", () => {
       alert("Gagal menyalin JSON");
     });
 });
+
+const darkToggle = document.getElementById("darkToggle");
+
+// load mode
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+  darkToggle.textContent = "☀️ Light Mode";
+}
+
+darkToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  const isDark = document.body.classList.contains("dark-mode");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+
+  darkToggle.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+});
