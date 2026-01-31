@@ -47,3 +47,16 @@ pre {
   overflow-x: auto;
 }
 
+button {
+  padding: 8px 16px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1e40af;
+}
+
