@@ -20,6 +20,21 @@ function syntaxHighlight(json) {
   );
 }
 
+function renderLineNumbers(text, errorLine = null) {
+  const lines = text.split("\n");
+  const lineNumbers = document.getElementById("lineNumbers");
+
+  lineNumbers.innerHTML = lines
+    .map((_, i) => {
+      const lineNo = i + 1;
+      return errorLine === lineNo
+        ? `<span class="error-line">${lineNo}</span>`
+        : `<span>${lineNo}</span>`;
+    })
+    .join("\n");
+}
+
+
 function beautify() {
   const input = document.getElementById("input").value;
   const output = document.getElementById("output");
@@ -27,9 +42,11 @@ function beautify() {
   try {
     const obj = JSON.parse(input);
     const pretty = JSON.stringify(obj, null, 2);
+
     output.innerHTML = syntaxHighlight(pretty);
+    renderLineNumbers(pretty);
   } catch (e) {
-    output.textContent = "❌ Invalid JSON:\n" + e.message;
+    handleJsonError(e, input);
   }
 }
 
@@ -46,6 +63,7 @@ function minify() {
   }
 }
 
+
 function clearAll() {
   document.getElementById("input").value = "";
   document.getElementById("output").textContent = "";
@@ -56,11 +74,7 @@ const output = document.getElementById("output");
 
 copyBtn.addEventListener("click", () => {
   const text = output.innerText.trim();
-
-  if (!text) {
-    alert("JSON masih kosong");
-    return;
-  }
+  if (!text) return;
 
   navigator.clipboard.writeText(text)
     .then(() => {
@@ -70,6 +84,7 @@ copyBtn.addEventListener("click", () => {
       }, 1200);
     });
 });
+
 
 const darkToggle = document.getElementById("darkToggle");
 
@@ -87,3 +102,19 @@ darkToggle.addEventListener("click", () => {
 
   darkToggle.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
 });
+
+function handleJsonError(error, source) {
+  const output = document.getElementById("output");
+  const match = error.message.match(/position (\d+)/);
+
+  let errorLine = null;
+
+  if (match) {
+    const pos = parseInt(match[1], 10);
+    errorLine = source.substring(0, pos).split("\n").length;
+  }
+
+  output.textContent = error.message;
+  renderLineNumbers(source, errorLine);
+}
+
