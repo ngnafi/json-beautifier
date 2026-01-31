@@ -60,3 +60,44 @@ button:hover {
   background: #1e40af;
 }
 
+body {
+  background: #f9fafb;
+  color: #111827;
+  transition: background 0.3s, color 0.3s;
+}
+
+.dark-mode {
+  background: #111827;
+  color: #e5e7eb;
+}
+
+.container {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.dark-mode .container {
+  background: #1f2933;
+}
+
+textarea,
+pre {
+  width: 100%;
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.dark-mode textarea,
+.dark-mode pre {
+  background: #020617;
+  color: #e5e7eb;
+  border-color: #334155;
+}
+
+button {
+  margin-top: 8px;
+}
