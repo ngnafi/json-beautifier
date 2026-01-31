@@ -27,3 +27,25 @@ function clearAll() {
   document.getElementById("output").textContent = "";
 }
 
+const copyBtn = document.getElementById("copyJsonBtn");
+const output = document.getElementById("output");
+
+copyBtn.addEventListener("click", () => {
+  const text = output.textContent.trim();
+
+  if (!text) {
+    alert("JSON masih kosong");
+    return;
+  }
+
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      copyBtn.innerText = "Copied!";
+      setTimeout(() => {
+        copyBtn.innerText = "Copy JSON";
+      }, 1500);
+    })
+    .catch(() => {
+      alert("Gagal menyalin JSON");
+    });
+});
