@@ -121,7 +121,7 @@ function handleJsonError(error, source) {
 document.getElementById('download-btn').addEventListener('click', function() {
     // 1. Ambil teks dari textarea/div hasil output Anda
     // Ganti 'output-area' dengan ID elemen tempat hasil beautify Anda muncul
-    const jsonContent = document.getElementById('output-area').value;
+    const jsonContent = document.getElementById('output').value;
 
     if (!jsonContent) {
         alert('Tidak ada konten untuk diunduh!');
