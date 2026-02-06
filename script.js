@@ -120,11 +120,11 @@ function handleJsonError(error, source) {
 
 document.getElementById('download-btn').addEventListener('click', function() {
     // 1. Ambil teks dari textarea/div hasil output Anda
-    // Ganti 'output-area' dengan ID elemen tempat hasil beautify Anda muncul
-    const jsonContent = document.getElementById('output').value;
+    // Gunakan .innerText karena ini adalah tag <pre>
+    const jsonContent = document.getElementById('output').innerText;
 
-    if (!jsonContent) {
-        alert('Tidak ada konten untuk diunduh!');
+    if (!jsonContent || jsonContent.trim() === "") {
+        alert('Output kosong, silakan beautify JSON terlebih dahulu!');
         return;
     }
 
