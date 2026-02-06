@@ -118,3 +118,39 @@ function handleJsonError(error, source) {
   renderLineNumbers(source, errorLine);
 }
 
+document.getElementById('download-btn').addEventListener('click', function() {
+    // 1. Ambil teks dari textarea/div hasil output Anda
+    // Ganti 'output-area' dengan ID elemen tempat hasil beautify Anda muncul
+    const jsonContent = document.getElementById('output-area').value;
+
+    if (!jsonContent) {
+        alert('Tidak ada konten untuk diunduh!');
+        return;
+    }
+
+    try {
+        // 2. Validasi apakah itu JSON yang benar sebelum diunduh (opsional tapi bagus)
+        JSON.parse(jsonContent);
+
+        // 3. Buat file Blob
+        const blob = new Blob([jsonContent], { type: 'application/json' });
+        
+        // 4. Buat link unduhan sementara
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        
+        // 5. Beri nama file (misal: data.json)
+        link.href = url;
+        link.download = 'beautified-data.json';
+        
+        // 6. Simulasikan klik untuk memulai unduhan
+        document.body.appendChild(link);
+        link.click();
+        
+        // 7. Bersihkan memori
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    } catch (e) {
+        alert('Pastikan format JSON sudah benar sebelum mengunduh.');
+    }
+});
